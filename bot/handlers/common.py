@@ -1,19 +1,6 @@
-import asyncio
-import logging
-import os
-import sys
-
-from aiogram import Bot, Dispatcher, html
-from aiogram.client.default import DefaultBotProperties
-from aiogram.enums import ParseMode
+from aiogram import Dispatcher, html
 from aiogram.filters import CommandStart
 from aiogram.types import Message
-
-TOKEN = os.environ.get('ENV_TOKEN')
-
-if not TOKEN:
-    print('Значение переменной окружения ENV_TOKEN не задано')
-    exit(-1)
 
 dp = Dispatcher()
 
@@ -44,16 +31,3 @@ async def echo_handler(message: Message) -> None:
     except TypeError:
         # But not all the types is supported to be copied so need to handle it
         await message.answer("Nice try!")
-
-
-async def main() -> None:
-    # Initialize Bot instance with default bot properties which will be passed to all API calls
-    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-
-    # And the run events dispatching
-    await dp.start_polling(bot)
-
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-    asyncio.run(main())
