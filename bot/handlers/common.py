@@ -1,5 +1,5 @@
 from aiogram import html, Router
-from aiogram.filters import CommandStart
+from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 
 router = Router()
@@ -16,3 +16,8 @@ async def command_start_handler(message: Message) -> None:
     # method automatically or call API method directly via
     # Bot instance: `bot.send_message(chat_id=message.chat.id, ...)`
     await message.answer(f"Hello, {html.bold(message.from_user.full_name)}!")
+
+
+@router.message(Command('get_chat_id'))
+async def get_chat_id_handler(message: Message) -> None:
+    await message.answer('ID этого чата: ' + str(message.chat.id))
