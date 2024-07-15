@@ -1,19 +1,13 @@
 import asyncio
 import logging
-import os
 import sys
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-from bot.handlers import unknown, common
-
-TOKEN = os.environ.get('ENV_TOKEN')
-
-if not TOKEN:
-    print('Значение переменной окружения ENV_TOKEN не задано')
-    exit(-1)
+from bot.config.settings import TOKEN
+from bot.handlers import unknown, common, images
 
 
 async def main() -> None:
@@ -23,6 +17,7 @@ async def main() -> None:
 
     # Registration of handlers
     dp.include_router(common.router)
+    dp.include_router(images.router)
     # Registering a handler for an unrecognized command (must be last)
     dp.include_router(unknown.router)
 
