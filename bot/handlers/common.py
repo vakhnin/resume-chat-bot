@@ -2,7 +2,7 @@ from aiogram import html, Router
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 
-router = Router()
+router: Router = Router()
 
 
 @router.message(CommandStart())

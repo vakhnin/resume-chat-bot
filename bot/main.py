@@ -12,8 +12,8 @@ from bot.handlers import unknown, common, images
 
 async def main() -> None:
     # Initialize Bot instance with default bot properties which will be passed to all API calls
-    bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    dp = Dispatcher(bot=bot)
+    bot: Bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    dp: Dispatcher = Dispatcher(bot=bot)
 
     # Registration of handlers
     dp.include_router(common.router)
