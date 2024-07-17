@@ -1,11 +1,11 @@
 from pathlib import Path
-from typing import Union
+from typing import Union, Optional
 
 from aiogram import Bot
 from aiogram.types import FSInputFile, Message
 
 
-async def upload_image(bot: Bot, file_path: Path) -> Union[str, None]:
+async def upload_image(bot: Bot, file_path: Path) -> Optional[str]:
     if not file_path.exists():
         return None
     photo: FSInputFile = FSInputFile(file_path)
