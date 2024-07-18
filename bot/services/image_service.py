@@ -1,8 +1,10 @@
 from pathlib import Path
-from typing import Union, Optional
+from typing import Optional
 
 from aiogram import Bot
 from aiogram.types import FSInputFile, Message
+
+from bot.config.settings import ADMIN_CHAT_ID
 
 
 async def upload_image(bot: Bot, file_path: Path) -> Optional[str]:
