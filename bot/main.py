@@ -9,17 +9,24 @@ from aiogram.enums import ParseMode
 from bot.config.settings import API_TOKEN
 from bot.handlers import unknown, common, images
 
+bot: Bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+dp: Dispatcher = Dispatcher(bot=bot)
+
+
+async def shutdown(dispatcher: Dispatcher) -> None:
+    await dispatcher.storage.close()
+    await bot.session.close()
+    logging.info('Сессия бота закрыта')
+
 
 async def main() -> None:
-    # Initialize Bot instance with default bot properties which will be passed to all API calls
-    bot: Bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    dp: Dispatcher = Dispatcher(bot=bot)
-
     # Registration of handlers
     dp.include_router(common.router)
     dp.include_router(images.router)
     # Registering a handler for an unrecognized command (must be last)
     dp.include_router(unknown.router)
+
+    dp.shutdown.register(shutdown)
 
     # And the run events dispatching
     await dp.start_polling(bot)
@@ -27,4 +34,8 @@ async def main() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-    asyncio.run(main())
+
+    try:
+        asyncio.run(main())
+    except (KeyboardInterrupt, SystemExit, RuntimeError):
+        logging.info('Бот остановлен!')
