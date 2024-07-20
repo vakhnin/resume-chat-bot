@@ -2,9 +2,14 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+from sqlalchemy import create_engine, Engine
+from sqlalchemy.orm import Session
+
+from bot.db.models import Base
 
 BASE_DIR: Path = Path(__file__).parent.parent.parent
 IMAGES_DIR: Path = BASE_DIR / 'bot' / 'data' / 'img'
+DATABASE_URL: str = f'sqlite:///{BASE_DIR / "bot.sqlite"}'
 
 load_dotenv(BASE_DIR / '.env')
 
@@ -17,3 +22,7 @@ if not API_TOKEN:
 if not ADMIN_CHAT_ID:
     print('Значение переменной окружения ADMIN_CHAT_ID не задано')
     exit(-1)
+
+db_engine: Engine = create_engine(DATABASE_URL, echo=True)
+db_session: Session = Session(bind=db_engine)
+Base.metadata.create_all(bind=db_engine)
