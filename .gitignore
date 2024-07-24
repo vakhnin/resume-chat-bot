@@ -161,6 +161,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
-bot/data/img/test_images/
+bot/data/preload_img/
 
 bot.sqlite
