@@ -1,3 +1,5 @@
+from typing import NoReturn
+
 from aiogram import Router
 from aiogram.types import Message
 
@@ -5,7 +7,7 @@ router: Router = Router()
 
 
 @router.message()
-async def echo_handler(message: Message) -> None:
+async def echo_handler(message: Message) -> NoReturn:
     """
     Handler will forward receive a message back to the sender
 

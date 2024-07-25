@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import sys
+from typing import NoReturn
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
@@ -13,7 +14,7 @@ bot: Bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode=ParseMod
 dp: Dispatcher = Dispatcher(bot=bot)
 
 
-async def shutdown(dispatcher: Dispatcher) -> None:
+async def shutdown(dispatcher: Dispatcher) -> NoReturn:
     await dispatcher.storage.close()
     await bot.session.close()
     logging.info('Сессия бота закрыта')
@@ -21,7 +22,7 @@ async def shutdown(dispatcher: Dispatcher) -> None:
     logging.info('Сессия BD закрыта')
 
 
-async def main() -> None:
+async def main() -> NoReturn:
     # Registration of handlers
     dp.include_router(common.router)
     dp.include_router(images.router)

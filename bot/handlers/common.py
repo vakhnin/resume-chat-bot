@@ -1,3 +1,5 @@
+from typing import NoReturn
+
 from aiogram import html, Router
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
@@ -6,7 +8,7 @@ router: Router = Router()
 
 
 @router.message(CommandStart())
-async def command_start_handler(message: Message) -> None:
+async def command_start_handler(message: Message) -> NoReturn:
     """
     This handler receives messages with `/start` command
     """
@@ -19,5 +21,5 @@ async def command_start_handler(message: Message) -> None:
 
 
 @router.message(Command('get_chat_id'))
-async def get_chat_id_handler(message: Message) -> None:
+async def get_chat_id_handler(message: Message) -> NoReturn:
     await message.answer('ID этого чата: ' + str(message.chat.id))
