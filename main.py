@@ -6,7 +6,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-from bot.config.settings import API_TOKEN
+from bot.config.settings import API_TOKEN, db_session
 from bot.handlers import unknown, common, images
 
 bot: Bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
@@ -17,6 +17,8 @@ async def shutdown(dispatcher: Dispatcher) -> None:
     await dispatcher.storage.close()
     await bot.session.close()
     logging.info('Сессия бота закрыта')
+    db_session.close()
+    logging.info('Сессия BD закрыта')
 
 
 async def main() -> None:
