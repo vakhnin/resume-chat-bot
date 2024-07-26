@@ -4,6 +4,8 @@ from aiogram import html, Router
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 
+from bot.config.settings import BASE_DIR
+
 router: Router = Router()
 
 
@@ -23,3 +25,10 @@ async def command_start_handler(message: Message) -> NoReturn:
 @router.message(Command('get_chat_id'))
 async def get_chat_id_handler(message: Message) -> NoReturn:
     await message.answer('ID этого чата: ' + str(message.chat.id))
+
+
+@router.message(Command('test_markup'))
+async def test_markup(message: Message) -> NoReturn:
+    with open(BASE_DIR / "bot" / "data" / "test_markup.txt", "r") as file:
+        answer: str = file.read()
+        await message.answer(answer)
