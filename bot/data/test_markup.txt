@@ -1,5 +1,0 @@
-<b>Bold text</b>
-<i>Italic text</i>
-<a href='https://example.com'>Link</a>
-<code>Inline code</code>
-<pre>Code block</pre>
