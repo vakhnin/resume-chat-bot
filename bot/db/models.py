@@ -52,4 +52,5 @@ class ProjectsList(Base):
     projects_list_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str]
     projects: Mapped[list['Project']] \
-        = relationship("ProjectsListProjectstAssociation", back_populates="projects_list")
+        = relationship("ProjectsListProjectstAssociation", back_populates="projects_list",
+                       order_by="ProjectsListProjectstAssociation.order")
