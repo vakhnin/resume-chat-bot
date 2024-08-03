@@ -32,7 +32,7 @@ class ProjectsListProjectstAssociation(Base):
         ForeignKey("project_list.projects_list_id"), primary_key=True
     )
     order: Mapped[int]
-    projects: Mapped["Project"] = relationship(back_populates="projects_list")
+    project: Mapped["Project"] = relationship(back_populates="projects_list")
     projects_list: Mapped["ProjectsList"] = relationship(back_populates="projects")
 
 
@@ -44,7 +44,7 @@ class Project(Base):
     shot_description: Mapped[str]
     description: Mapped[str]
     projects_list: Mapped[list['ProjectsList']] \
-        = relationship("ProjectsListProjectstAssociation", back_populates="projects")
+        = relationship("ProjectsListProjectstAssociation", back_populates="project")
 
 
 class ProjectsList(Base):

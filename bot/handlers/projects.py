@@ -23,5 +23,5 @@ async def command_image_handler(message: Message) -> NoReturn:
     answer: str = ""
     if project_list:
         for item in project_list.projects:
-            answer += item.projects.shot_description + "\n"
+            answer += item.project.shot_description + "\n"
         await message.answer(answer)
