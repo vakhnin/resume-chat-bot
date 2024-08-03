@@ -8,7 +8,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from bot.config.settings import API_TOKEN, db_session
-from bot.handlers import unknown, common
+from bot.handlers import unknown, common, images, projects
 from bot.handlers.test_handlers import test_handlers
 
 bot: Bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
@@ -20,12 +20,14 @@ async def shutdown(dispatcher: Dispatcher) -> NoReturn:
     await bot.session.close()
     logging.info('Сессия бота закрыта')
     db_session.close()
-    logging.info('Сессия BD закрыта')
+    logging.info('Сессия DB закрыта')
 
 
 async def main() -> NoReturn:
     # Registration of handlers
     dp.include_router(common.router)
+    dp.include_router(projects.router)
+    dp.include_router(images.router)
     dp.include_router(test_handlers.router)
     # Registering a handler for an unrecognized command (must be last)
     dp.include_router(unknown.router)
