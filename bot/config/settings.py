@@ -8,7 +8,8 @@ from sqlalchemy.orm import Session
 from bot.db.models import Base
 
 BASE_DIR: Path = Path(__file__).parent.parent.parent
-PRELOAD_IMAGES_DIR: Path = BASE_DIR / 'bot' / 'data' / 'preload_img'
+DATA_DIR: Path = BASE_DIR / 'bot' / 'data'
+PRELOAD_IMAGES_DIR: Path = DATA_DIR / 'preload_img'
 DATABASE_URL: str = f'sqlite:///{BASE_DIR / "bot.sqlite"}'
 
 load_dotenv(BASE_DIR / '.env')
