@@ -8,7 +8,17 @@ from sqlalchemy.orm import mapped_column
 
 
 class Base(DeclarativeBase):
-    pass
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+
+class BaseMixin:
+    catalog: Mapped[str]
+    source_file: Mapped[str]
+
+
+class PageMixin:
+    name: Mapped[str]
+    content: Mapped[str]
 
 
 class Image(Base):
@@ -25,20 +35,12 @@ class Image(Base):
         return f"Image(id={self.id!r}, catalog={self.catalog!r}, file_name={self.file_name!r})"
 
 
-class Page(Base):
+class Page(Base, BaseMixin, PageMixin):
     __tablename__ = "page"
-    __mapper_args__ = {'polymorphic_identity': 'page'}
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    catalog: Mapped[str]
-    source_file: Mapped[str]
-    name: Mapped[str]
-    content: Mapped[str]
 
 
-class Project(Page):
+class Project(Base, BaseMixin, PageMixin):
     __tablename__ = "project"
-    __mapper_args__ = {'polymorphic_identity': 'project'}
-    id: Mapped[int] = mapped_column(ForeignKey("page.id"), primary_key=True)
     button_title: Mapped[str]
     for_skills_content: Mapped[str]
     shot_content: Mapped[str]
@@ -48,7 +50,6 @@ class Project(Page):
 
 class ProjectsList(Base):
     __tablename__ = "project_list"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str]
     projects: Mapped[list['Project']] = relationship("ProjectListAssociation", back_populates="projects_list",
                                                      order_by="ProjectListAssociation.order")
